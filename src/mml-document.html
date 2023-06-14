@@ -1,197 +1,197 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- Scene -->
+    <m-light type="ambient" intensity="0.2"></m-light>
+    <m-light
+      type="spotlight"
+      intensity="0.8"
+      x="5"
+      y="10"
+      z="5"
+      rx="10"
+      rz="-10"
+      debug="true"
+    ></m-light>
+    <m-plane color="#2563eb" width="20" height="20" rx="-90"></m-plane>
+    <m-plane color="#172554" width="200" height="200" rx="-90" y="-2"></m-plane>
+
+    <!-- Labels -->
+    <m-group y="7">
+      <m-label
+        id="uptime-label"
+        y="2"
+        width="4"
+        height="0.5"
+        color="#bfdbfe"
+        font-color="#172554"
+        alignment="center"
+      ></m-label>
+      <m-label
+        id="connected-label"
+        y="1"
+        width="4"
+        height="0.5"
+        color="#bfdbfe"
+        font-color="#172554"
+        alignment="center"
+      ></m-label>
+      <m-label
+        id="click-label"
+        y="0"
+        width="4"
+        height="0.5"
+        color="#bfdbfe"
+        font-color="#172554"
+        alignment="center"
+        content="Click the dice!"
+      ></m-label>
+
+
+    <!-- Dice -->
+    <m-group y="1">
+      <m-model
+        id="dice"
+        src="https://s3.eu-west-2.amazonaws.com/s3uk.mgz.me/models/dice.glb"
+        sx="1"
+        sy="1"
+        sz="1"
+        y="1"
+        rx="0"
+        ry="0"
+        rz="0"
+      ></m-model>
+    </m-group>
+
+
+      // Get elements
+      const uptimeLabelElem = document.getElementById("uptime-label");
+      const connectedLabelElem = document.getElementById("connected-label");
+      const diceClickLabelElem = document.getElementById("click-label");
+      const diceElem = document.getElementById("dice");
+
+      // Prepare document state
+      let connectedClientCount = 0;
+      let diceClickCount = 0;
+      let diceResult = 1;
+
+      const updateUptimeLabel = () => {
+        // Get total document uptime
+        // NOTE: document.timeline.currentTime reports uptime in ms
+        const totalUptimeSeconds = Math.floor(document.timeline.currentTime / 1000);
+        const uptimeMinutes = Math.floor(totalUptimeSeconds / 60);
+        const uptimeSeconds = totalUptimeSeconds - uptimeMinutes * 60;
+        const uptimeLabelText =
+          uptimeMinutes > 0
+            ? `${uptimeMinutes}:${String(uptimeSeconds).padStart(2, "0")}`
+            : `${uptimeSeconds}s`;
+
+        uptimeLabelElem.setAttribute("content", `Uptime: ${uptimeLabelText}`);
+      };
+
+      const updateConnectedCountLabel = () => {
+        connectedLabelElem.setAttribute("content", `Connected clients: ${connectedClientCount}`);
+      };
+
+      const updateDiceClickCountLabel = () => {
+        diceClickLabelElem.setAttribute("content", `Dice clicks: ${diceClickCount}`);
+      };
+
+      const rollDice = () => {
+        const lerp = (start, end, t) => start * (1 - t) + end * t;
+        const radToDeg = (radians) => radians * (180 / Math.PI);
+
+        const rollMap = {
+          1: {
+            rx: radToDeg(2 * Math.PI),
+            ry: 0,
+            rz: radToDeg(2 * Math.PI),
+          },
+          2: {
+            rx: radToDeg(2 * Math.PI),
+            ry: 0,
+            rz: radToDeg(2 * Math.PI - Math.PI / 2),
+          },
+          3: {
+            rx: radToDeg(2 * Math.PI - Math.PI / 2),
+            ry: 0,
+            rz: radToDeg(2 * Math.PI),
+          },
+          4: {
+            rx: radToDeg(2 * Math.PI + Math.PI / 2),
+            ry: 0,
+            rz: radToDeg(2 * Math.PI),
+          },
+          5: {
+            rx: radToDeg(2 * Math.PI),
+            ry: 0,
+            rz: radToDeg(2 * Math.PI + Math.PI / 2),
+          },
+          6: {
+            rx: radToDeg(2 * Math.PI + Math.PI),
+            ry: 0,
+            rz: radToDeg(2 * Math.PI),
+          },
+        };
+
+        let newRoll = Math.floor(Math.random() * 6) + 1;
+        while (newRoll === diceResult) {
+          newRoll = Math.floor(Math.random() * 6) + 1;
+        }
+        diceResult = newRoll;
+
+        const targetRotation = rollMap[diceResult];
+        const startRotation = {
+          rx: parseFloat(diceElem.getAttribute("rx")),
+          ry: parseFloat(diceElem.getAttribute("ry")),
+          rz: parseFloat(diceElem.getAttribute("rz")),
+        };
+
+        const animationTime = 400;
+        const interval = 40;
+        let currentTime = 0;
+
+        let intervalId = setInterval(() => {
+          currentTime += interval;
+          if (currentTime < animationTime) {
+            let t = currentTime / animationTime;
+            let currentRotation = {
+              rx: lerp(startRotation.rx, targetRotation.rx, t),
+              ry: lerp(startRotation.ry, targetRotation.ry, t),
+              rz: lerp(startRotation.rz, targetRotation.rz, t),
+            };
+            diceElem.setAttribute("rx", currentRotation.rx.toString());
+            diceElem.setAttribute("ry", currentRotation.ry.toString());
+            diceElem.setAttribute("rz", currentRotation.rz.toString());
+            diceElem.setAttribute("y", Math.cos(t * 2.0 - 0.5) * 3.5);
+          } else {
+            diceElem.setAttribute("rx", targetRotation.rx.toString());
+            diceElem.setAttribute("ry", targetRotation.ry.toString());
+            diceElem.setAttribute("rz", targetRotation.rz.toString());
+            clearInterval(intervalId);
+          }
+        }, interval);
+      };
+
+      // Refresh document uptime
+      updateUptimeLabel();
+      setInterval(updateUptimeLabel, 1000);
+
+      // Client connection listeners
+
+        connectedClientCount++;
+        updateConnectedCountLabel();
+
+
+        connectedClientCount--;
+        updateConnectedCountLabel();
+
+
+      // Dice click listener
+      diceElem.addEventListener("click", () => {
+        diceClickCount++;
+        updateDiceClickCountLabel();
+        rollDice();
+
+
+
+</html>

@@ -1,21 +1,21 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    }
+  ],
+  "tasks": {
+    "start": {
+      "name": "start",
+      "command": "npm start",
+      "runAtStart": true,
+      "restartOn": {
+        "branch": true
+      },
+      "preview": {
+        "port": 8080
+      }
+    }
+  }
+}
