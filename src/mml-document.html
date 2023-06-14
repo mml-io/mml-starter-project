@@ -1,5 +1,5 @@
-
-
+<html>
+  <body>
     <!-- Scene -->
     <m-light type="ambient" intensity="0.2"></m-light>
     <m-light
@@ -45,7 +45,7 @@
         alignment="center"
         content="Click the dice!"
       ></m-label>
-
+    </m-group>
 
     <!-- Dice -->
     <m-group y="1">
@@ -62,7 +62,7 @@
       ></m-model>
     </m-group>
 
-
+    <script>
       // Get elements
       const uptimeLabelElem = document.getElementById("uptime-label");
       const connectedLabelElem = document.getElementById("connected-label");
@@ -177,21 +177,21 @@
       setInterval(updateUptimeLabel, 1000);
 
       // Client connection listeners
-
+      window.addEventListener("connected", () => {
         connectedClientCount++;
         updateConnectedCountLabel();
-
-
+      });
+      window.addEventListener("disconnected", () => {
         connectedClientCount--;
         updateConnectedCountLabel();
-
+      });
 
       // Dice click listener
       diceElem.addEventListener("click", () => {
         diceClickCount++;
         updateDiceClickCountLabel();
         rollDice();
-
-
-
+      });
+    </script>
+  </body>
 </html>
