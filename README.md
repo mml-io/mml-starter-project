@@ -18,7 +18,7 @@ Click the button below to create a new sandbox on CodeSandbox.io.
 Once your sandbox is initialized, select the 'start: 8080' tab to view the running document as
 pictured below:
 
-<img src="CodeSandbox.png" width="500">
+<img src="https://raw.githubusercontent.com/mml-io/mml-starter-project/main/CodeSandbox.png" width="500">
 
 ## Running locally
 
