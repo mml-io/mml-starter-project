@@ -50,6 +50,11 @@ app.ws("/", (ws) => {
 
 // Serve page
 app.get("/", (req, res) => {
+  if (process.env.DISABLE_SERVER === "true") {
+    res.send(`Please click the 'Fork' button to create your sandbox.`);
+    return;
+  }
+
   res.send(`
     <html>
       <script src="/client/index.js?websocketUrl=${getWebsocketUrl(req)}"></script>
