@@ -13,7 +13,7 @@ discover MML and start experimenting with your own creations. To dive deeper, pl
 
 Click the button below to create a new sandbox on CodeSandbox.io.
 
-[![Edit mml-starter-project on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/5dcx25)
+[![Edit mml-starter-project on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/gdfd4r)
 
 Once your sandbox is initialized, select the 'start: 8080' tab to view the running document as
 pictured below:
