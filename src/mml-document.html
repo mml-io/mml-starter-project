@@ -1,7 +1,6 @@
 <html>
   <body>
     <!-- Scene -->
-    <m-light type="ambient" intensity="0.2"></m-light>
     <m-light
       type="spotlight"
       intensity="0.8"
@@ -12,8 +11,6 @@
       rz="-10"
       debug="true"
     ></m-light>
-    <m-plane color="#2563eb" width="20" height="20" rx="-90"></m-plane>
-    <m-plane color="#172554" width="200" height="200" rx="-90" y="-2"></m-plane>
 
     <!-- Labels -->
     <m-group y="7">
@@ -51,6 +48,8 @@
     <m-group y="1">
       <m-model
         id="dice"
+        collide="true"
+        collideable="true"
         src="https://s3.eu-west-2.amazonaws.com/s3uk.mgz.me/models/dice.glb"
         sx="1"
         sy="1"
