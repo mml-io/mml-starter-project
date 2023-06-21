@@ -39,3 +39,7 @@ provided URL.
 If you're running it locally, you'll need to expose the server to the internet first so that others
 can connect. This can be achieved by creating a tunnel using a tool such as
 [ngrok](https://ngrok.com).
+
+## Trying out your Creations
+
+You can also try your creations in [The Construct](https://construct.msquared.io/collection) by adding the object's `wss://` address to your collection. Once you have the object in your collection, visit the "The Construct" through the [Events](https://construct.msquared.io/) page. Once in the world, approach a special plinth to spawn your creation.
