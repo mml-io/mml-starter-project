@@ -42,4 +42,4 @@ can connect. This can be achieved by creating a tunnel using a tool such as
 
 ## Trying out your Creations
 
-You can also try your creations in [The Construct](https://construct.msquared.io/collection) by adding the objects WSS address to your collection. Once you have the object in your collection, visit the "The Construct" through the [Events](https://construct.msquared.io/) page. Once in the world, approach a special plinth to spawn your creation.
+You can also try your creations in [The Construct](https://construct.msquared.io/collection) by adding the object's `wss://` address to your collection. Once you have the object in your collection, visit the "The Construct" through the [Events](https://construct.msquared.io/) page. Once in the world, approach a special plinth to spawn your creation.
