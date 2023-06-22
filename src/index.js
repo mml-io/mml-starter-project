@@ -24,7 +24,7 @@ const getWebsocketUrl = (req) =>
       : req.headers.host
   }`;
 
-/* x-forwarded-port is not standardized, and it could either be a port or a comma separated list of ports depending on the hosting platform */
+// x-forwarded-port is not standardized, and it could either be a port or a comma separated list of ports depending on the hosting platform
 
 // Initialize EditableNetworkedDOM
 const document = new EditableNetworkedDOM(
