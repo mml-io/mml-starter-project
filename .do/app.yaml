@@ -1,0 +1,8 @@
+name: mml-starter-project
+services:
+  - environment_slug: node-js
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: mml-io/mml-starter-project
+    name: mml-starter-project
