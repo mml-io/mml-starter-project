@@ -20,6 +20,17 @@ pictured below:
 
 <img src="https://raw.githubusercontent.com/mml-io/mml-starter-project/main/CodeSandbox.png" width="500">
 
+## Run on Glitch
+
+Click the button to create a new sandbox on Glitch.com
+
+[![Remix on Glitch](https://cdn.glitch.me/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button-v2.svg)](https://glitch.com/edit/#!/remix/skitter-rebel-primrose)
+
+Once your sandbox is initialized, select the preview button at the bottom and you will see the running document as
+pictured below:
+
+<img src="https://raw.githubusercontent.com/mml-io/mml-starter-project/main/CodeSandbox.png" width="500">
+
 ## Running locally
 
 Making sure you have Node.js installed, run the following from the root of the repository:
