@@ -19,10 +19,12 @@ const getDomFileContents = () => fs.readFileSync(filePath, "utf8");
 // Function to get WebSocket URL
 const getWebsocketUrl = (req) =>
   `${req.secure ? "wss" : "ws"}://${
-    req.headers["x-forwarded-host"]
-      ? `${req.headers["x-forwarded-host"]}:${req.headers["x-forwarded-port"]}`
+    req.headers["x-forwarded-host"] && req.headers["x-forwarded-port"]
+      ? `${req.headers["x-forwarded-host"]}:${req.headers["x-forwarded-port"].split(",")[0]}` // In case of Glitch hosting. See comment below.
       : req.headers.host
   }`;
+
+// x-forwarded-port is not standardized, and it could either be a port or a comma separated list of ports depending on the hosting platform
 
 // Initialize EditableNetworkedDOM
 const document = new EditableNetworkedDOM(
