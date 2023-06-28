@@ -1,0 +1,8 @@
+spec:
+  name: mml-starter-project
+  services:
+    - environment_slug: node-js
+      git:
+        branch: main
+        repo_clone_url: https://github.com/mml-io/mml-starter-project.git
+      name: mml-starter-project
