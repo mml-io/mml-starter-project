@@ -5,7 +5,7 @@ const chokidar = require("chokidar");
 const express = require("express");
 const enableWs = require("express-ws");
 
-const { LocalObservableDomFactory, EditableNetworkedDOM } = require("networked-dom-server");
+const { LocalObservableDOMFactory, EditableNetworkedDOM } = require("networked-dom-server");
 
 // Set up server port
 const port = process.env.PORT || 8080;
@@ -29,7 +29,7 @@ const getWebsocketUrl = (req) =>
 // Initialize EditableNetworkedDOM
 const document = new EditableNetworkedDOM(
   url.pathToFileURL(filePath).toString(),
-  LocalObservableDomFactory,
+  LocalObservableDOMFactory,
 );
 document.load(getDomFileContents());
 
