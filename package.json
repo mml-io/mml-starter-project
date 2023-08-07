@@ -13,8 +13,8 @@
     "chokidar": "3.5.3",
     "express": "4.18.2",
     "express-ws": "5.0.2",
-    "mml-web-client": "0.3.0",
-    "networked-dom-server": "0.3.0",
+    "mml-web-client": "0.4.0",
+    "networked-dom-server": "0.4.0",
     "ws": "8.13.0"
   }
 }
