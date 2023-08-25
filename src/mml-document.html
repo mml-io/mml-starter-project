@@ -2,18 +2,15 @@
   <body>
     <!-- Scene -->
     <m-light
-      type="spotlight"
+      type="point"
       intensity="0.8"
       x="5"
       y="10"
       z="5"
-      rx="10"
-      rz="-10"
-      angle="90"
     ></m-light>
 
     <!-- Labels -->
-    <m-group y="7">
+    <m-group y="5">
       <m-label
         id="uptime-label"
         y="2"
@@ -34,7 +31,6 @@
       ></m-label>
       <m-label
         id="click-label"
-        y="0"
         width="4"
         height="0.5"
         color="#bfdbfe"
@@ -45,33 +41,73 @@
     </m-group>
 
     <!-- Dice -->
-    <m-group y="1">
-      <m-model
+    <m-model
         id="dice"
-        collide="true"
-        collideable="true"
         src="https://public.mml.io/dice.glb"
-        sx="1"
-        sy="1"
-        sz="1"
+        onclick="rollDice()"
         y="1"
-        rx="0"
-        ry="0"
-        rz="0"
-      ></m-model>
-    </m-group>
-
+    >
+      <m-attr-anim id="y-up-anim" easing="easeOutSine" attr="y" duration="200" start="1" end="1" loop="false"></m-attr-anim>
+      <m-attr-anim id="y-down-anim" easing="easeOutBounce" attr="y" start-time="0" duration="500" start="1" end="1" loop="false"></m-attr-anim>
+      <m-attr-anim id="rx-anim" easing="easeInOutCubic" attr="rx" duration="500" start="0" end="0" loop="false"></m-attr-anim>
+      <m-attr-anim id="ry-anim" easing="easeInOutCubic" attr="ry" duration="500" start="0" end="0" loop="false"></m-attr-anim>
+      <m-attr-anim id="rz-anim" easing="easeInOutCubic" attr="rz" duration="500" start="0" end="0" loop="false"></m-attr-anim>
+    </m-model>
     <script>
       // Get elements
       const uptimeLabelElem = document.getElementById("uptime-label");
       const connectedLabelElem = document.getElementById("connected-label");
+      const yUpAnim = document.getElementById("y-up-anim");
+      const yDownAnim = document.getElementById("y-down-anim");
+      const rxAnim = document.getElementById("rx-anim");
+      const ryAnim = document.getElementById("ry-anim");
+      const rzAnim = document.getElementById("rz-anim");
       const diceClickLabelElem = document.getElementById("click-label");
-      const diceElem = document.getElementById("dice");
 
       // Prepare document state
+      let diceResult = 1;
       let connectedClientCount = 0;
       let diceClickCount = 0;
-      let diceResult = 1;
+      let rollTime = 0;
+      const rollMap = {
+        1: [0, 0, 0],
+        2: [0, 0, 270],
+        3: [270, 0, 0],
+        4: [90, 0, 0],
+        5: [0, 0, 90],
+        6: [180, 0, 0],
+      };
+      function rollDice() {
+        diceClickCount++;
+        updateDiceClickCountLabel();
+
+        const t = document.timeline.currentTime + 50;
+        if (t < rollTime + 400) {
+          return;
+        }
+        rollTime = t;
+        const oldRotation = rollMap[diceResult];
+        let newRoll = Math.floor(Math.random() * 6) + 1;
+        while (newRoll === diceResult) {
+          newRoll = Math.floor(Math.random() * 6) + 1;
+        }
+        diceResult = newRoll;
+        const targetRotation = rollMap[diceResult];
+        yUpAnim.setAttribute("start-time", t);
+        yUpAnim.setAttribute("end", 3);
+        yDownAnim.setAttribute("start-time", t+300);
+        yDownAnim.setAttribute("start", 3);
+        yDownAnim.setAttribute("end", 1);
+        rxAnim.setAttribute("start-time", t);
+        rxAnim.setAttribute("start", oldRotation[0].toString());
+        rxAnim.setAttribute("end", targetRotation[0].toString());
+        ryAnim.setAttribute("start-time", t);
+        ryAnim.setAttribute("start", oldRotation[1].toString());
+        ryAnim.setAttribute("end", targetRotation[1].toString());
+        rzAnim.setAttribute("start-time", t);
+        rzAnim.setAttribute("start", oldRotation[2].toString());
+        rzAnim.setAttribute("end", targetRotation[2].toString());
+      }
 
       const updateUptimeLabel = () => {
         // Get total document uptime
@@ -95,82 +131,6 @@
         diceClickLabelElem.setAttribute("content", `Dice clicks: ${diceClickCount}`);
       };
 
-      const rollDice = () => {
-        const lerp = (start, end, t) => start * (1 - t) + end * t;
-        const radToDeg = (radians) => radians * (180 / Math.PI);
-
-        const rollMap = {
-          1: {
-            rx: radToDeg(2 * Math.PI),
-            ry: 0,
-            rz: radToDeg(2 * Math.PI),
-          },
-          2: {
-            rx: radToDeg(2 * Math.PI),
-            ry: 0,
-            rz: radToDeg(2 * Math.PI - Math.PI / 2),
-          },
-          3: {
-            rx: radToDeg(2 * Math.PI - Math.PI / 2),
-            ry: 0,
-            rz: radToDeg(2 * Math.PI),
-          },
-          4: {
-            rx: radToDeg(2 * Math.PI + Math.PI / 2),
-            ry: 0,
-            rz: radToDeg(2 * Math.PI),
-          },
-          5: {
-            rx: radToDeg(2 * Math.PI),
-            ry: 0,
-            rz: radToDeg(2 * Math.PI + Math.PI / 2),
-          },
-          6: {
-            rx: radToDeg(2 * Math.PI + Math.PI),
-            ry: 0,
-            rz: radToDeg(2 * Math.PI),
-          },
-        };
-
-        let newRoll = Math.floor(Math.random() * 6) + 1;
-        while (newRoll === diceResult) {
-          newRoll = Math.floor(Math.random() * 6) + 1;
-        }
-        diceResult = newRoll;
-
-        const targetRotation = rollMap[diceResult];
-        const startRotation = {
-          rx: parseFloat(diceElem.getAttribute("rx")),
-          ry: parseFloat(diceElem.getAttribute("ry")),
-          rz: parseFloat(diceElem.getAttribute("rz")),
-        };
-
-        const animationTime = 400;
-        const interval = 40;
-        let currentTime = 0;
-
-        let intervalId = setInterval(() => {
-          currentTime += interval;
-          if (currentTime < animationTime) {
-            let t = currentTime / animationTime;
-            let currentRotation = {
-              rx: lerp(startRotation.rx, targetRotation.rx, t),
-              ry: lerp(startRotation.ry, targetRotation.ry, t),
-              rz: lerp(startRotation.rz, targetRotation.rz, t),
-            };
-            diceElem.setAttribute("rx", currentRotation.rx.toString());
-            diceElem.setAttribute("ry", currentRotation.ry.toString());
-            diceElem.setAttribute("rz", currentRotation.rz.toString());
-            diceElem.setAttribute("y", Math.cos(t * 2.0 - 0.5) * 3.5);
-          } else {
-            diceElem.setAttribute("rx", targetRotation.rx.toString());
-            diceElem.setAttribute("ry", targetRotation.ry.toString());
-            diceElem.setAttribute("rz", targetRotation.rz.toString());
-            clearInterval(intervalId);
-          }
-        }, interval);
-      };
-
       // Refresh document uptime
       updateUptimeLabel();
       setInterval(updateUptimeLabel, 1000);
@@ -183,13 +143,6 @@
       window.addEventListener("disconnected", () => {
         connectedClientCount--;
         updateConnectedCountLabel();
-      });
-
-      // Dice click listener
-      diceElem.addEventListener("click", () => {
-        diceClickCount++;
-        updateDiceClickCountLabel();
-        rollDice();
       });
     </script>
   </body>
