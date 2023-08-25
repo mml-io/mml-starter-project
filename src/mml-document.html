@@ -2,41 +2,41 @@
   <body>
     <!-- Scene -->
     <m-light
-      type="point"
-      intensity="0.8"
-      x="5"
-      y="10"
-      z="5"
+        type="point"
+        intensity="0.8"
+        x="5"
+        y="10"
+        z="5"
     ></m-light>
 
     <!-- Labels -->
     <m-group y="5">
       <m-label
-        id="uptime-label"
-        y="2"
-        width="4"
-        height="0.5"
-        color="#bfdbfe"
-        font-color="#172554"
-        alignment="center"
+          id="uptime-label"
+          y="2"
+          width="4"
+          height="0.5"
+          color="#bfdbfe"
+          font-color="#172554"
+          alignment="center"
       ></m-label>
       <m-label
-        id="connected-label"
-        y="1"
-        width="4"
-        height="0.5"
-        color="#bfdbfe"
-        font-color="#172554"
-        alignment="center"
+          id="connected-label"
+          y="1"
+          width="4"
+          height="0.5"
+          color="#bfdbfe"
+          font-color="#172554"
+          alignment="center"
       ></m-label>
       <m-label
-        id="click-label"
-        width="4"
-        height="0.5"
-        color="#bfdbfe"
-        font-color="#172554"
-        alignment="center"
-        content="Click the dice!"
+          id="click-label"
+          width="4"
+          height="0.5"
+          color="#bfdbfe"
+          font-color="#172554"
+          alignment="center"
+          content="Click the dice!"
       ></m-label>
     </m-group>
 
@@ -47,7 +47,7 @@
         onclick="rollDice()"
         y="1"
     >
-      <m-attr-anim id="y-up-anim" easing="easeOutSine" attr="y" duration="200" start="1" end="1" loop="false"></m-attr-anim>
+      <m-attr-anim id="y-up-anim" easing="easeOutSine" attr="y" duration="300" start="1" end="1" loop="false"></m-attr-anim>
       <m-attr-anim id="y-down-anim" easing="easeOutBounce" attr="y" start-time="0" duration="500" start="1" end="1" loop="false"></m-attr-anim>
       <m-attr-anim id="rx-anim" easing="easeInOutCubic" attr="rx" duration="500" start="0" end="0" loop="false"></m-attr-anim>
       <m-attr-anim id="ry-anim" easing="easeInOutCubic" attr="ry" duration="500" start="0" end="0" loop="false"></m-attr-anim>
@@ -82,16 +82,12 @@
         updateDiceClickCountLabel();
 
         const t = document.timeline.currentTime + 50;
-        if (t < rollTime + 400) {
+        if (t < rollTime + 800) {
           return;
         }
         rollTime = t;
         const oldRotation = rollMap[diceResult];
-        let newRoll = Math.floor(Math.random() * 6) + 1;
-        while (newRoll === diceResult) {
-          newRoll = Math.floor(Math.random() * 6) + 1;
-        }
-        diceResult = newRoll;
+        diceResult = Math.floor(Math.random() * 6) + 1;
         const targetRotation = rollMap[diceResult];
         yUpAnim.setAttribute("start-time", t);
         yUpAnim.setAttribute("end", 3);
