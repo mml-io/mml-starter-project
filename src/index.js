@@ -1,17 +1,20 @@
-const fs = require("fs");
-const path = require("path");
-const url = require("url");
-const chokidar = require("chokidar");
-const express = require("express");
-const enableWs = require("express-ws");
+import fs from "fs";
+import path from "path";
+import url from "url";
+import cors from "cors";
+import chokidar from "chokidar";
+import express, { static as expressStatic } from "express";
+import enableWs from "express-ws";
 
-const { LocalObservableDOMFactory, EditableNetworkedDOM } = require("networked-dom-server");
+import { EditableNetworkedDOM, LocalObservableDOMFactory } from "networked-dom-server";
+
+const dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 // Set up server port
 const port = process.env.PORT || 8080;
 
 // Resolve file path for DOM HTML
-const filePath = path.resolve(__dirname, "./mml-document.html");
+const filePath = path.resolve(dirname, "./mml-document.html");
 
 // Function to read DOM file contents
 const getDomFileContents = () => fs.readFileSync(filePath, "utf8");
@@ -68,14 +71,17 @@ app.get("/", (req, res) => {
 // Serve mml-web-client
 app.use(
   "/client/",
-  express.static(path.resolve(__dirname, "../node_modules/mml-web-client/build/")),
+  expressStatic(path.resolve(dirname, "../node_modules/mml-web-client/build/")),
 );
+
+// Serve assets with CORS allowing all origins
+app.use("/assets/", cors(), expressStatic(path.resolve(dirname, "../assets/")));
 
 // Serve starter project overlay UI
 app.use(
   "/overlay/",
-  express.static(
-    path.resolve(__dirname, "../node_modules/@mml-io/mml-starter-project-overlay/dist/"),
+  expressStatic(
+    path.resolve(dirname, "../node_modules/@mml-io/mml-starter-project-overlay/dist/"),
   ),
 );
 

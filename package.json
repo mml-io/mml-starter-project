@@ -2,8 +2,9 @@
   "name": "mml-starter-project",
   "private": true,
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
+  "type": "module",
   "main": "./src/index.js",
   "scripts": {
     "start": "node ./src/index.js"
@@ -11,10 +12,11 @@
   "dependencies": {
     "@mml-io/mml-starter-project-overlay": "0.0.3",
     "chokidar": "3.5.3",
+    "cors": "^2.8.5",
     "express": "4.18.2",
     "express-ws": "5.0.2",
-    "mml-web-client": "0.6.1",
-    "networked-dom-server": "0.6.0",
-    "ws": "8.13.0"
+    "mml-web-client": "0.9.0",
+    "networked-dom-server": "0.9.0",
+    "ws": "8.14.2"
   }
 }
