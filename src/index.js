@@ -37,7 +37,11 @@ const document = new EditableNetworkedDOM(
 document.load(getDomFileContents());
 
 // Watch for changes in the DOM file and reload
-chokidar.watch(filePath).on("change", () => {
+chokidar.watch(filePath, {
+  awaitWriteFinish: {
+      stabilityThreshold: 100
+  }
+}).on("change", () => {
   document.load(getDomFileContents());
 });
 
