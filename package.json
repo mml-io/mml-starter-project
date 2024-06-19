@@ -14,6 +14,6 @@
     "express-ws": "5.0.2",
     "mml-web-client": "0.14.0",
     "networked-dom-server": "0.14.0",
-    "ws": "8.17.0"
+    "ws": "8.17.1"
   }
 }
