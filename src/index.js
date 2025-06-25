@@ -6,7 +6,7 @@ import chokidar from "chokidar";
 import express, { static as expressStatic } from "express";
 import enableWs from "express-ws";
 
-import { EditableNetworkedDOM, LocalObservableDOMFactory } from "networked-dom-server";
+import { EditableNetworkedDOM, LocalObservableDOMFactory } from "@mml-io/networked-dom-server";
 
 const dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -66,7 +66,7 @@ app.get("/", (req, res) => {
 
   res.send(`
     <html>
-      <script src="/client/index.js?websocketUrl=${getWebsocketUrl(req)}"></script>
+      <script src="/client/index.js?url=${getWebsocketUrl(req)}"></script>
       <script src="/overlay/index.js"></script>
     </html>
 `);
@@ -75,7 +75,7 @@ app.get("/", (req, res) => {
 // Serve mml-web-client
 app.use(
   "/client/",
-  expressStatic(path.resolve(dirname, "../node_modules/mml-web-client/build/")),
+  expressStatic(path.resolve(dirname, "../node_modules/@mml-io/mml-web-client/build/")),
 );
 
 // Serve assets with CORS allowing all origins
