@@ -13,20 +13,9 @@ discover MML and start experimenting with your own creations. To dive deeper, pl
 
 Click the button below to create a new sandbox on CodeSandbox.io.
 
-[![Edit mml-starter-project on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://mml.io/redirects/mml-starter-project-codesandbox)
+[![Edit mml-starter-project on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/github/mml-io/mml-starter-project)
 
 Once your sandbox is initialized, select the 'start: 8080' tab to view the running document as
-pictured below:
-
-<img src="https://raw.githubusercontent.com/mml-io/mml-starter-project/main/CodeSandbox.jpg" width="500">
-
-## Run on Glitch
-
-Click the button to create a new sandbox on Glitch.com
-
-[![Remix on Glitch](https://cdn.glitch.me/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button-v2.svg)](https://glitch.com/edit/#!/remix/skitter-rebel-primrose)
-
-Once your sandbox is initialized, select the preview button at the bottom and you will see the running document as
 pictured below:
 
 <img src="https://raw.githubusercontent.com/mml-io/mml-starter-project/main/CodeSandbox.jpg" width="500">
